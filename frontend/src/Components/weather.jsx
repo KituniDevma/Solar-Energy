@@ -1,9 +1,7 @@
-import React,{ useContext }  from 'react';
+import React, { useState } from 'react';
 import './weather.css';
 import Condition from './condition';
 import axios from 'axios';
-import { DataContext } from "./DataContext";
-
  
  function Weather() {
 
@@ -19,29 +17,31 @@ import { DataContext } from "./DataContext";
          
     };
 
-    const { data, location } = useContext(DataContext);
+    const [data,setData]= useState({});
+
+    const [location,setLocation]=useState('');
 
 
-    // const searchLocation = (event) =>{
-    //     if(event.key === 'Enter'){
-    //         const weatherURL=`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=52b5937a089af02356f7af883d9ec6bf`;
+    const searchLocation = (event) =>{
+        if(event.key === 'Enter'){
+            const weatherURL=`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=52b5937a089af02356f7af883d9ec6bf`;
 
-    //         axios.get(weatherURL).then((response)=>{
-    //             console.log(response.data)
-    //             setData(response.data)
-    //         })
-    //         setLocation('')
+            axios.get(weatherURL).then((response)=>{
+                console.log(response.data)
+                setData(response.data)
+            })
+            setLocation('')
             
-    //     }
+        }
         
-    // }
+    }
 
 
     
 
     return(
         <div className='weatherComponent' style={weatherComponentStyle}>
-            {/* <div className='search'  > 
+            <div className='search'  > 
                 <input 
                     type='text'
                     value={location}
@@ -52,7 +52,7 @@ import { DataContext } from "./DataContext";
 
                     </input>
                  
-            </div> */}
+            </div>
         {/* top half */}
        
         <div className='top'>

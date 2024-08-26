@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';  
 import Signup from './Pages/Signup';
-import { DataProvider } from './Components/DataContext';
-
+ 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
