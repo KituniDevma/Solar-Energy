@@ -1,0 +1,34 @@
+.condition-card {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Outfit', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+     
+}
+
+.condition-content {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* Equivalent to space-x-4 in Tailwind */
+}
+
+.condition-attribute-name {
+    color: rgb(0, 0, 0);
+    
+    font-weight: 600;
+    
+}
+
+.condition-attribute-value {
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+}
