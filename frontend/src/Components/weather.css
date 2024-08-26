@@ -1,0 +1,81 @@
+.weatherComponent {
+     border-radius: 15px;
+    padding: 20px;
+     width: 50%;
+    margin: 20px ;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+     
+
+
+}
+
+ 
+
+.row1{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    font-size: 1rem;
+    color: #333;
+}
+
+.locationText {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+}
+
+.subText {
+    font-size: 0.9rem;
+    color: #777;
+    margin: 2px 0;
+}
+
+.row2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.solar{
+    font-size: 3rem;
+    font-weight: 700;
+    color: #333;
+    margin-right: 10px;
+    flex: 5;
+}
+.description{
+    flex:1;
+}
+
+.solarText{
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+}
+
+.row3 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.attribute {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    font-size: 1rem;
+    color: #333;
+}
