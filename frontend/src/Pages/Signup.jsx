@@ -1,21 +1,36 @@
 import React, { useState } from "react";
 import backgroundImage from '../Components/Assets/Background.png';
 import RalewayWoff2 from '../Components/Assets/Fonts/Raleway-Regular.woff2';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from '../api';
 
-function Signup({ onSignup }) {
+function Signup() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const route = "/api/user/register/"
+
+    const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         if (password !== confirmPassword) {
             alert("Passwords do not match!");
         } else {
-            onSignup();
-            alert("Signup successful!");
+            // onSignup();
+            try {
+                const res = await api.post(route, { username, email, password })
+                alert("Signup successful!");
+                navigate("/login")
+            }
+            catch (error) {
+                alert(error)
+            } finally {
+                setLoading(false);                
+            }
         }
     };
 
