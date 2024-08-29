@@ -142,6 +142,7 @@ const styles = {
       borderRadius: '10px',
       width: '100%',
       margin: '0 auto',
+      paddingBottom: '10px',
       boxSizing: 'border-box',
   },
   searchInput: {
@@ -165,10 +166,13 @@ const styles = {
       padding: '10px 20px',
       fontSize: '16px',
       borderRadius: '20px',
+      height: '50px',
+      width: '130px',
       border: 'none',
       cursor: 'pointer',
       transition: 'all 0.3s ease',
-      backgroundColor: 'rgba(255, 255, 255, 0.6)',
+      boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)',
+      backgroundColor: 'rgba(255, 255, 255, 0.7)',      color: 'black',
   },
   icon: {
       marginRight: '8px',
