@@ -16,12 +16,7 @@ function SignupAndLogout() {
 }
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
-
+   
   return (
     <Router>
       <Routes>
