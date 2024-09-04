@@ -2,12 +2,14 @@ import React from "react";
 import backgroundImage from '../Components/Assets/Background.png';
 import Header from "../Components/header";
 import Weather from "../Components/weather";
+import Forecast from "../Components/forecast";
 import EnergyCal from "../Components/EnergyCal";
 import StreamlitEmbed from "../Components/StreamlitEmbed";
 
 function DashboardPage() {
   return (
     <div style={styles.container}>
+      <Forecast/>
       <Header />
       <Weather />
       <div style={styles.content}>
