@@ -4,6 +4,7 @@ const EnergyCal = () => {
   const [width, setWidth] = useState('');
   const [length, setLength] = useState('');
   const [area, setArea] = useState(null);
+  const [power, setPower] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,7 +40,7 @@ const EnergyCal = () => {
       </form>
       {area !== null && (
         <div className="result">
-          <h3>Calculated Energy: {area} kWh/m²</h3>
+          <h3>Calculated Energy: {area}  kWh</h3>
         </div>
       )}
     </div>
