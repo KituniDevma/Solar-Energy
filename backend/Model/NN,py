@@ -1,0 +1,68 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+# Load the dataset
+file_path = 'solar-energy-nsrdb-texas-usa.csv'
+data = pd.read_csv(file_path)
+
+# Preprocessing: Dropping the 'date' column as it is not needed for the prediction
+data_cleaned = data.drop(columns=['date'])
+
+# Define features (X) and target (y)
+X = data_cleaned.drop(columns=['OT'])
+y = data_cleaned['OT']
+
+# Split the data into training and testing sets (80% training, 20% testing)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Standardize the data
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Build the Neural Network model
+model = Sequential([
+    Dense(128, input_dim=X_train.shape[1], activation='relu'),
+    Dense(64, activation='relu'),
+    Dense(32, activation='relu'),
+    Dense(16, activation='relu'),
+    Dense(1)  # Output layer for regression (single neuron)
+])  
+
+# Compile the model
+model.compile(optimizer='adam', loss='mean_squared_error')
+
+# Train the model
+model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2, verbose=1)
+
+# Make predictions on the test data
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+mae = mean_absolute_error(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
+rmse = mse ** 0.5
+r2 = r2_score(y_test, y_pred)
+
+mae, rmse, r2
+
+# Calculate MAE
+mae = mean_absolute_error(y_test, y_pred)
+
+# Calculate the mean of the actual values
+mean_y_test = y_test.mean()
+
+# Calculate MAE as a percentage of the mean
+mae_percentage_of_mean = (mae / mean_y_test) * 100
+
+mae_percentage_of_mean
+
+# Calculate MAE as a percentage of the range of actual values
+range_y_test = y_test.max() - y_test.min()
+mae_percentage_of_range = (mae / range_y_test) * 100
+
+mae_percentage_of_range

@@ -3,14 +3,20 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';  
 import Signup from './Pages/Signup';
+import ProtectedRoute from './Components/ProtectedRoute';
+
+function Logout() {
+  localStorage.clear()
+  return <Navigate to="/login" />
+}
+
+function SignupAndLogout() {
+  localStorage.clear()
+  return <Signup />
+}
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
-
+   
   return (
     <Router>
       <Routes>
@@ -18,19 +24,17 @@ function App() {
         <Route
           path="/"
           element={
-            isAuthenticated ? <Navigate to="/dashboard" /> : <Login onLogin={handleLogin} />
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>  
           }
         />
-
-        <Route path="/Signup" element={<Signup />} />
+        <Route path= "/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/signup" element={<SignupAndLogout />} />
         
         {/* Dashboard route, accessible only after login */}
-        <Route
-          path="/dashboard"
-          element={
-            isAuthenticated ? <Dashboard /> : <Navigate to="/" />
-          }
-        />
+        
       </Routes>
     </Router>
   );

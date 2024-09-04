@@ -1,19 +1,33 @@
 import React, {useState} from "react";
 import backgroundImage from '../Components/Assets/Background.png'
 import RalewayWoff2 from '../Components/Assets/Fonts/Raleway-Regular.woff2';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../api";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
 //Login the page
-function Login({onLogin}) {
+function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
-    const handleSubmit = (e) => {
+    const route = "/api/token/"
+
+    const handleSubmit = async (e) => {
+      setLoading(true)
       e.preventDefault();
-      if (username === "user" && password === "password"){
-        onLogin();
-      }else {
-        alert("Invalid credentials!")
+
+      try {
+        const res = await api.post(route, {username, password})
+        localStorage.setItem(ACCESS_TOKEN, res.data.access)
+        localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
+        navigate("/")
+      }
+      catch (error) {
+        alert(error)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -30,10 +44,24 @@ function Login({onLogin}) {
             </div>
             <div style={styles.loginContainer}>
                 <h2 style={styles.loginTitle}>Login</h2>
-                <input type="text" placeholder="Username" style={styles.input}/>
-                <input type="password" placeholder="Password" style={styles.input}/>
-                <button style={styles.loginButton}>Login</button>
-                <a href="#" style={styles.forgotPassword}>Forgot your password?</a>
+                <form onSubmit={handleSubmit} style={styles.form}>
+                  <input 
+                    type="text" 
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)} 
+                    style={styles.input}
+                  />
+                  <input 
+                    type="password" 
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    style={styles.input}
+                  />
+                  <button type="submit" style={styles.loginButton}>Login</button>
+                  <a href="#" style={styles.forgotPassword}>Forgot your password?</a>
+                </form>
                 <p style={styles.newAccount}>
                     New here? <Link to="/Signup" style={styles.createAccount}>Create new account</Link>
                 </p>

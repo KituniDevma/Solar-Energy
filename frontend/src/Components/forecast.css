@@ -1,0 +1,8 @@
+.Embed-container {
+    height: 600px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    margin-left: 0;
+    padding:0;
+}
