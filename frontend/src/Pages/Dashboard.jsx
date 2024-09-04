@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import Header from "../Components/header";
 import Weather from "../Components/weather";
 import Forecast from "../Components/forecast";
+import EnergyCal from "../Components/EnergyCal";
 
 function DashboardPage() {
   return (
     <div style={styles.container}>
-      <Header />
       <Forecast/>
+      <Header />
       <Weather />
       <EnergyCal />
       
