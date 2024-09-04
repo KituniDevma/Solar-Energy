@@ -1,8 +1,6 @@
 .weatherComponent {
      border-radius: 15px;
-    padding: 10px;
-     width: 22%;
-    margin: 20px ;
+    
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
@@ -36,6 +34,7 @@
 
 
 .c1{
+    padding-left: 5px;
 
 }
 

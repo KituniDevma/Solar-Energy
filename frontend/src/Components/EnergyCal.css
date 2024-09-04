@@ -27,15 +27,17 @@
   button {
     width: 100%;
     padding: 10px;
-    background-color: #c8cc5c;
-    color: white;
+   
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    background-color:#f8ff20;
+    color: black;
   }
   
   button:hover {
-    background-color: #45a049;
+    background-color:  #e4c02d;
+    color: white;
   }
   
   .result {
