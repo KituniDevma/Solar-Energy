@@ -34,6 +34,7 @@ const styles = {
         maxWidth: '100%', // Set max width to 100% of the parent container
         width: '100%', // Make sure the header takes up the full width of the parent container
         margin: '0 auto', // Center the header horizontally
+        marginBottom: '10px', // Add some space at the bottom of the header 
         boxSizing: 'border-box', // Ensure padding and border are included in the element's total width and height
       },
   logoContainer: {

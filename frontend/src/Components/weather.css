@@ -1,7 +1,7 @@
 .weatherComponent {
      border-radius: 15px;
-    padding: 20px;
-     width: 50%;
+    padding: 10px;
+     width: 22%;
     margin: 20px ;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -15,7 +15,7 @@
 
 .row1{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex: 2;
     font-size: 1rem;
     color: #333;
@@ -34,12 +34,29 @@
     margin: 2px 0;
 }
 
-.row2 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex: 1;
+
+.c1{
+
 }
+
+.c2{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+}
+
+.r1, .r2{     
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    
+}
+
+
 
 .solar{
     font-size: 3rem;
@@ -50,12 +67,14 @@
 }
 .description{
     flex:1;
+    margin-left: 20%;
 }
 
 .solarText{
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: #333;
+    text-align: end;
 }
 
 .icon {
@@ -65,7 +84,7 @@
 
 .row3 {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 20px;
@@ -75,7 +94,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px;
-    font-size: 1rem;
+     
+    font-size: 0.8rem;
     color: #333;
+    flex:1  ;
+
 }

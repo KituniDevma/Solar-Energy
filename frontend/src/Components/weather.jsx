@@ -71,24 +71,31 @@ function Weather() {
 
             <div className='weatherComponent' >
                 <div className='row1'>
-                         <p className='locationText'>{data.name}</p>
+                    <div className='c1'>
+                    <p className='locationText'>{data.name}</p>
                         <p className='subText'>Solar energy generation</p>
                         <p className='subText'>{new Date().toISOString().split('T')[0]}</p>
                      
-                </div>
 
-                <div className='row2'>
+                    </div>
+                    <div className='c2'>
  
                         <div className='description'>
                         <img src={SunIcon} alt="sun icon" className='icon' />                        </div>
                         <div className='solar'>
-                            {data.main ? <h1 className='solarText'>85 kWh/m²</h1> : null}
+                           {data.main ? <h1 className='solarText'>85 kWh/m²</h1> : null}
                         </div>
+
+                    </div>
+                    
                      
                 </div>
 
+              
+
                 {/* Bottom half */}
                 <div className='row3'>
+                    <div className='r1'>
                     <div className='attribute'>
                         <Condition attributeName="Temperature" attributeValue={data.main ? data.main.temp : null} unit="°C" />
                     </div>
@@ -98,6 +105,10 @@ function Weather() {
                     <div className='attribute'>
                         <Condition attributeName="Humidity" attributeValue={data.main ? data.main.humidity : null} unit="%" />
                     </div>
+
+                    </div>
+
+                    <div className='r2'>
                     <div className='attribute'>
                         <Condition attributeName="Visibility" attributeValue={data.visibility ? (data.visibility / 1000) : null} unit="km" />
                     </div>
@@ -110,6 +121,10 @@ function Weather() {
     attributeValue={data.main ? Math.round(data.main.temp - ((100 - data.main.humidity) / 5)) : null} 
     unit="°C" 
 />                    </div>
+
+                    </div>
+                   
+                    
                 </div>
             </div>
         </div>
@@ -127,6 +142,7 @@ const styles = {
       borderRadius: '10px',
       width: '100%',
       margin: '0 auto',
+      paddingBottom: '10px',
       boxSizing: 'border-box',
   },
   searchInput: {
@@ -150,10 +166,13 @@ const styles = {
       padding: '10px 20px',
       fontSize: '16px',
       borderRadius: '20px',
+      height: '50px',
+      width: '130px',
       border: 'none',
       cursor: 'pointer',
       transition: 'all 0.3s ease',
-      backgroundColor: 'rgba(255, 255, 255, 0.6)',
+      boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)',
+      backgroundColor: 'rgba(255, 255, 255, 0.7)',      color: 'black',
   },
   icon: {
       marginRight: '8px',
