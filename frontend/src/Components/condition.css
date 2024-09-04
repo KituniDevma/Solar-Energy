@@ -2,8 +2,9 @@
     background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
     border-radius: 15px;
-    padding: 6px;
-    display: flex;
+    padding: 4px;
+    margin: 0.5px;
+   
     align-items: center;
     justify-content: space-between;
     display: flex;
@@ -12,6 +13,8 @@
     font-family: 'Outfit', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;
+
+    width:80%;
      
 }
 

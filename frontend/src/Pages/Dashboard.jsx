@@ -2,15 +2,22 @@ import React, { useState } from "react";
 import backgroundImage from '../Components/Assets/Background.png';
 import { Link } from "react-router-dom";
 import Header from "../Components/header";
+<<<<<<< HEAD
 import Weather from "../Components/weather";
 import Forecast from "../Components/forecast";
+=======
+ import Weather from "../Components/weather";
+import EnergyCal from "../Components/EnergyCal";
+>>>>>>> master
 
-function DashboardPage() {
+ function DashboardPage() {
   return (
     <div style={styles.container}>
       <Header />
       <Forecast/>
       <Weather />
+      < EnergyCal />
+      
       
     </div>
   );

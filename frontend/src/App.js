@@ -15,7 +15,6 @@ function SignupAndLogout() {
   return <Signup />
 }
 
- 
 function App() {
    
   return (
