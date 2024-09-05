@@ -51,19 +51,34 @@ function DashboardPage() {
   return (
     <div style={styles.container}>
       <Header />
-      <SolarChart />
-      <Weather />      
       <div style={styles.content}>
         <div style={styles.col1}>
-         
+          <Weather />
           <EnergyCal />
         </div>
-        {/* <div style={styles.col2}>
+        <div style={styles.col2}>
           <SolarChart />
-        </div> */}
+        </div>
       </div>
     </div>
   );
+
+  // return (
+  //   <div style={styles.container}>
+  //     <Header />
+  //     <SolarChart />
+  //     <Weather />      
+  //     <div style={styles.content}>
+  //       <div style={styles.col1}>
+         
+  //         <EnergyCal />
+  //       </div>
+  //       {/* <div style={styles.col2}>
+  //         <SolarChart />
+  //       </div> */}
+  //     </div>
+  //   </div>
+  // );
 }
 
 export default DashboardPage;
@@ -80,18 +95,14 @@ const styles = {
   },
   content: {
     display: 'flex',
-    flex: 1,
+    flexDirection: 'row',
     width: '100%',
-    height: 'calc(100% - 60px)', // Adjust based on your header height
+    padding: '20px',
   },
   col1: {
-    flex: 1,
-    flexBasis: '100%', // 1/5 of the width
-    padding: '10px',
+    margin: 10,
   },
   col2: {
-    flex: 0,
-    flexBasis: '80%', // 4/5 of the width
-    padding: '10px',
+    margin: 0,
   },
 };
