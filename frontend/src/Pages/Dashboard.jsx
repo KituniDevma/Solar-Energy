@@ -1,17 +1,58 @@
-import React from "react";
+import react, { useState, useEffect } from "react";
 import backgroundImage from '../Components/Assets/Background.png';
 import Header from "../Components/header";
 import Weather from "../Components/weather";
 import Forecast from "../Components/forecast";
 import EnergyCal from "../Components/EnergyCal";
-import StreamlitEmbed from "../Components/StreamlitEmbed";
+import api from "../api";
 
 function DashboardPage() {
+  const [location, setLocation] = useState([]);
+  const [name, setName] = useState('');
+  
+  const getLocation = () => {
+    api
+      .get("/api/location/")
+      .then((res) => {
+        setLocation(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => alert(error));
+  }
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  const deleteLocation = (id) => {
+    api
+      .delete(`/api/location/delete/${id}/`)
+      .then((res) => {
+        if (res.status === 204) alert('Location deleted successfully!');
+        else alert('Failed to delete location');
+        getLocation();
+      })
+      .catch((err) => alert(err));
+  }
+
+  const addLocation = (e) => {
+    e.preventDefault()
+    api
+      .post("/api/location/", { name })
+      .then((res) => {
+        if (res.status === 201) alert('Location added successfully!');
+        else alert('Failed to add location');
+        getLocation();
+        setName('');
+      })
+      .catch((err) => alert(err));
+  }
+
   return (
     <div style={styles.container}>
       <Forecast/>
       <Header />
-      <Weather />
+      <Weather onAdd={addLocation} loc={location} onDelete={deleteLocation}/>
       <div style={styles.content}>
         <div style={styles.col1}>
          

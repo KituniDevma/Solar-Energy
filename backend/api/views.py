@@ -4,6 +4,9 @@ from rest_framework import generics
 from .serializers import UserSerializer, LocationSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Location
+from django.http import JsonResponse
+import requests
+from .encoder import json_to_csv
 
 # Create your views here.
 class CreateUserView(generics.CreateAPIView):
@@ -32,3 +35,17 @@ class LocationDelete(generics.DestroyAPIView):
     def get_queryset(self):
         user = self.request.user
         return Location.objects.filter(user=user)
+    
+def get_weather(request):
+    location = request.GET.get('location')
+
+    api_url = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}/2022-01-29/2022-01-30?unitGroup=metric&include=hours&key=7EZKZKPQMNU2R2ZU6HR2T45S7&contentType=json'
+
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()
+        weather_data = response.json()
+        json_to_csv(weather_data)
+        return JsonResponse(weather_data, safe=False)
+    except requests.exceptions.RequestException as e:
+        return JsonResponse({'error': str(e)}, status=500)
