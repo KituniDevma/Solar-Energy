@@ -1,0 +1,10 @@
+.solar-chart-container {
+    display: flex;
+    justify-content: flex-end; /* Align to the right */
+    padding: 20px;
+  }
+  
+  .solar-chart {
+    width: 800px;  /* Adjust width to make the graph smaller */
+    height: 900px; /* Adjust height to make the graph smaller */
+  }

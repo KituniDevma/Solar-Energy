@@ -4,7 +4,7 @@ import Condition from './condition';
 import axios from 'axios';
 import SunIcon from './Assets/sun-svgrepo-com.svg';
 
-function Weather() {
+function Weather({ onAdd, loc, onDelete }) {
     const [selectedLocation, setSelectedLocation] = useState("Colombo");
     const locations = ["Colombo", "Gampaha", "Galle", "Kandy","jaffna"];
     const [data, setData] = useState({});
