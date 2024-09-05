@@ -4,7 +4,7 @@ from rest_framework import generics
 from .serializers import UserSerializer, LocationSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Location
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import requests
 from .encoder import json_to_csv
 
@@ -49,3 +49,11 @@ def get_weather(request):
         return JsonResponse(weather_data, safe=False)
     except requests.exceptions.RequestException as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
+def get_data(request):
+    with open('test.csv', 'r') as file:
+        data = file.read()
+
+    response = HttpResponse(data, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="data.csv"'
+    return response

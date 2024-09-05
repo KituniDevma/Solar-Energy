@@ -4,5 +4,6 @@ from . import views
 urlpatterns = [
     path('location/', views.LocationListCreate.as_view(), name='location-list'),
     path('location/delete/<int:pk>/', views.LocationDelete.as_view(), name='delete-location'),
-    path('weather/', views.get_weather, name='get-weather')
+    path('weather/', views.get_weather, name='get-weather'),
+    path('data/', views.get_data, name='get-data')
 ]

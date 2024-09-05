@@ -2,7 +2,7 @@ import react, { useState, useEffect } from "react";
 import backgroundImage from '../Components/Assets/Background.png';
 import Header from "../Components/header";
 import Weather from "../Components/weather";
-import Forecast from "../Components/forecast";
+import SolarChart from "../Components/LineChart";
 import EnergyCal from "../Components/EnergyCal";
 import api from "../api";
 
@@ -17,12 +17,12 @@ function DashboardPage() {
         setLocation(res.data);
         console.log(res.data);
       })
-      .catch((err) => alert(error));
+      .catch((err) => alert(err));
   }
 
-  useEffect(() => {
-    getLocation();
-  }, []);
+  // useEffect(() => {
+  //   getLocation();
+  // }, []);
 
   const deleteLocation = (id) => {
     api
@@ -50,16 +50,16 @@ function DashboardPage() {
 
   return (
     <div style={styles.container}>
-      <Forecast/>
       <Header />
-      <Weather onAdd={addLocation} loc={location} onDelete={deleteLocation}/>
+      <SolarChart />
+      <Weather />      
       <div style={styles.content}>
         <div style={styles.col1}>
          
           <EnergyCal />
         </div>
         {/* <div style={styles.col2}>
-          <StreamlitEmbed />
+          <SolarChart />
         </div> */}
       </div>
     </div>
@@ -86,11 +86,11 @@ const styles = {
   },
   col1: {
     flex: 1,
-    flexBasis: '20%', // 1/5 of the width
+    flexBasis: '100%', // 1/5 of the width
     padding: '10px',
   },
   col2: {
-    flex: 4,
+    flex: 0,
     flexBasis: '80%', // 4/5 of the width
     padding: '10px',
   },
