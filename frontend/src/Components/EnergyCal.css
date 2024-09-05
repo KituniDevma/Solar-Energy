@@ -1,8 +1,8 @@
 .area-calculator {
     border-radius: 15px;
     padding: 10px;
-     width: 22%;
-    margin: 20px ;
+     width: 100%;
+    margin: 0 ;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }

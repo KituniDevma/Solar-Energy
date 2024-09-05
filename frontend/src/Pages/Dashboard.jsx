@@ -98,11 +98,16 @@ const styles = {
     flexDirection: 'row',
     width: '100%',
     padding: '20px',
+    paddingLeft: '0',
   },
   col1: {
-    margin: 10,
+    margin: '20px',
+    flex:1,
   },
   col2: {
     margin: 0,
+    flex: 2,
+    padding: '20px',
+    paddingLeft: '0',
   },
 };
