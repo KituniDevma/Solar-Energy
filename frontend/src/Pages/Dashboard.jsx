@@ -92,12 +92,15 @@ const styles = {
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
+    paddingTop:'0',
+    marginTop:'0',
   },
   content: {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
     padding: '20px',
+    paddingTop:'0',
     paddingLeft: '0',
   },
   col1: {
@@ -109,5 +112,6 @@ const styles = {
     flex: 2,
     padding: '20px',
     paddingLeft: '0',
+    paddingTop:'70px'
   },
 };
