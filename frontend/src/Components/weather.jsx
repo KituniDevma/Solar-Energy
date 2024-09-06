@@ -4,33 +4,9 @@ import Condition from './condition';
 import axios from 'axios';
 import SunIcon from './Assets/sun-svgrepo-com.svg';
 
-function Weather({ onAdd, loc, onDelete }) {
-    const [selectedLocation, setSelectedLocation] = useState("Colombo");
-    const [locations, setLocations] = useState(["Colombo", "Gampaha", "Galle", "Kandy", "Jaffna"]);
+function Weather({ selectedLocation, locations, setSelectedLocation, setLocations }) {
     const [data, setData] = useState({});
     const [location, setLocation] = useState('');
-
-    const fetchData = async (location) => {
-        try {
-            const url = `http://127.0.0.1:8000/api/weather/?location=${location}`
-            const response = await fetch(url)
-            if (response.status == 200) {}
-            else {}
-        } catch (error) {
-            console.error('Error fetching data from backend:', error);
-        }
-    }
-
-    const predict = async () => {
-        try {
-            const url = `XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`
-            const response = await fetch(url)
-            if (response.status == 200) {}
-            else {}
-        } catch (error) {
-            console.error('Error fetching data from backend:', error);
-        }
-    }
 
     // Fetch weather data for the selected location
     const fetchWeatherData = (location) => {

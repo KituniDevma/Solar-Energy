@@ -28,7 +28,7 @@ const SolarChart = () => {
         setChartData({
           datasets: [
             {
-              label: 'OT (Output Temperature)',
+              label: 'Solar Radiation',
               data: parsedData,
               borderColor: 'balck',
               fill: false,

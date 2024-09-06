@@ -97,7 +97,7 @@ def run_model(request):
         )
 
         if result.returncode == 0:
-            return JsonResponse({'status': 'success', 'message': 'Model training completed successfully', 'output': result.stdout})
+            return JsonResponse({'status': 'success', 'message': 'Model training completed successfully', 'output': result.stdout}, status=200)
         else:
             return JsonResponse({'status': 'error', 'message': 'Model training failed', 'error': result.stderr}, status=500)
     except Exception as e:
