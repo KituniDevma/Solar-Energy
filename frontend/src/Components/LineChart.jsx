@@ -28,9 +28,9 @@ const SolarChart = () => {
         setChartData({
           datasets: [
             {
-              label: 'OT (Output Temperature)',
+              label: 'Solar Radiation',
               data: parsedData,
-              borderColor: 'blue',
+              borderColor: 'balck',
               fill: false,
             },
           ],
@@ -57,14 +57,14 @@ const SolarChart = () => {
     <div className='solar-chart-container'>
         <div>
         <h2>Solar Energy OT Data</h2>
-        <div>
-            <label>Enter duration (hours): </label>
+        {/* <div>
+            <label>Enter duration (days): </label>
             <input
             type="number"
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
             />
-        </div>
+        </div> */}
         <div className='solar-chart'>
             <Line
                 ref={chartRef}
