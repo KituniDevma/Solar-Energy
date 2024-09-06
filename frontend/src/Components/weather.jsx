@@ -94,7 +94,7 @@ function Weather({ selectedLocation, locations, setSelectedLocation, setLocation
                             <img src={SunIcon} alt="sun icon" className='icon' />
                         </div>
                         <div className='solar'>
-                            {data.main ? <h1 className='solarText'>85 kWh/m²</h1> : null}
+                            {data.main ? <h1 className='solarText'>85 W/m²</h1> : null}
                         </div>
                     </div>
                 </div>
@@ -145,6 +145,7 @@ const styles = {
         margin: '10px 10px',
         paddingBottom: '10px',
         width: '100%',
+        marginTop: '0',
     },
     container: {
         display: 'flex',
@@ -155,17 +156,20 @@ const styles = {
         width: '100%',
         margin: '0 0',
         paddingBottom: '10px',
+        paddingTop: '10px',
         boxSizing: 'border-box',
     },
     searchInput: {
         flex: 1,
         padding: '10px 20px',
+        
         fontSize: '16px',
         color: 'black',
         borderRadius: '20px',
         border: '1px solid #ccc',
         marginRight: '20px',
         marginLeft: '20px',
+        marginTop:'0',
         outline: 'none',
         boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)',
         backgroundColor: 'rgba(255, 255, 255, 0.7)',

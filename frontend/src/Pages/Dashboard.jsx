@@ -1,5 +1,6 @@
 import react, { useState, useEffect } from "react";
 import backgroundImage from '../Components/Assets/Background.png';
+import sun from '../Components/Assets/sun.webp';
 import Header from "../Components/header";
 import Weather from "../Components/weather";
 import SolarChart from "../Components/LineChart";
@@ -88,9 +89,12 @@ function DashboardPage() {
     return (
       <div style={styles.container}>
         <Header />
-        <div>Loading...</div>
+        <div style={styles.loadingContainer}>
+          {/* <img src={sun} alt="Loading" style={styles.loadingImage} /> */}
+          <div>Loading...</div>
+        </div>
       </div>
-    )
+    );
   } else {
     return (
       <div style={styles.container}>
@@ -137,13 +141,23 @@ const styles = {
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
+    paddingTop:'0',
+    marginTop:'0',
   },
   content: {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
     padding: '20px',
+    paddingTop:'0',
     paddingLeft: '0',
+  },
+  loadingImage: {
+    marginLeft: '500px',
+    marginTop: '170px',
+    width: '500px',
+    height: '500px',
+    marginRight: '10px'
   },
   col1: {
     margin: '20px',
@@ -154,5 +168,6 @@ const styles = {
     flex: 2,
     padding: '20px',
     paddingLeft: '0',
+    paddingTop:'70px'
   },
 };

@@ -30,6 +30,7 @@
 
 .c1{
     padding-left: 5px;
+    margin-top:0;
 
 }
 
@@ -65,7 +66,7 @@
 }
 
 .solarText{
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     font-weight: 600;
     color: #333;
     text-align: end;
@@ -74,6 +75,7 @@
 .icon {
     width: 50px;
     height: 50px;
+    margin-top:30px;
 }
 
 .row3 {
