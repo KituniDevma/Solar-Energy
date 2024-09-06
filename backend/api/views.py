@@ -41,16 +41,16 @@ class LocationDelete(generics.DestroyAPIView):
 def get_weather(request):
     location = request.GET.get('location')
 
-    api_url = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}/2022-01-29/2022-01-30?unitGroup=metric&include=hours&key=7EZKZKPQMNU2R2ZU6HR2T45S7&contentType=json'
+    api_url = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}/yesterday?unitGroup=metric&include=days&key=7EZKZKPQMNU2R2ZU6HR2T45S7&contentType=json'
 
     try:
         response = requests.get(api_url)
         response.raise_for_status()
         weather_data = response.json()
         json_to_csv(weather_data)
-        return JsonResponse(weather_data, safe=False)
+        return JsonResponse({'status': 'Successful'}, status=200)
     except requests.exceptions.RequestException as e:
-        return JsonResponse({'error': str(e)}, status=500)
+        return JsonResponse({'status': 'Failed', 'error': str(e)}, status=500)
     
 def get_data(request):
     with open('test.csv', 'r') as file:
