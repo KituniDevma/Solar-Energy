@@ -2,9 +2,12 @@
     display: flex;
     justify-content: flex-end; /* Align to the right */
     padding: 20px;
+    height: 600px;
+    background-color: rgb(245, 242, 175);
+    border-radius: 2%;
   }
   
   .solar-chart {
-    width: 800px;  /* Adjust width to make the graph smaller */
+    width: 900px;  /* Adjust width to make the graph smaller */
     height: 900px; /* Adjust height to make the graph smaller */
   }
