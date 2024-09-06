@@ -17,6 +17,7 @@ import warnings
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from datetime import datetime, timedelta
 
 warnings.filterwarnings('ignore')
 
@@ -359,6 +360,18 @@ class Exp_Main(Exp_Basic):
             os.makedirs(folder_path)
 
         p = pd.DataFrame(preds)
+
+        column_names = ['temp' , 'dew', 'humidity', 'winddir', 'windspeed', 'pressure', 'cloudcover', 'OT']
+        p.columns = column_names
+
+        current_date = datetime.now().date()
+
+        # Create a list of 24 hourly time slots for the current date
+        time_slots = [datetime.combine(current_date, datetime.min.time()) + timedelta(hours=i) for i in range(24)]
+
+        # Add a new column 'datetime' to the DataFrame
+        p['date'] = time_slots
+        p.loc[p['OT'] < 20, 'OT'] = 0
         p.to_csv(folder_path + 'real_prediction.csv')
 
         return

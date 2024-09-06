@@ -41,7 +41,7 @@ class LocationDelete(generics.DestroyAPIView):
 def get_weather(request):
     location = request.GET.get('location')
 
-    api_url = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}/yesterday?unitGroup=metric&include=days&key=7EZKZKPQMNU2R2ZU6HR2T45S7&contentType=json'
+    api_url = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}/2024-09-05/2024-09-05?unitGroup=metric&include=days&key=P6FAKNRNT7GZCS3VH6VLRQ6WE&contentType=json'
 
     try:
         response = requests.get(api_url)
@@ -53,11 +53,11 @@ def get_weather(request):
         return JsonResponse({'status': 'Failed', 'error': str(e)}, status=500)
     
 def get_data(request):
-    with open('test.csv', 'r') as file:
+    with open('./model/results/real_prediction.csv', 'r') as file:
         data = file.read()
 
     response = HttpResponse(data, content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="data.csv"'
+    response['Content-Disposition'] = 'attachment; filename="prediction.csv"'
     return response
 
 def run_model(request):
@@ -68,7 +68,7 @@ def run_model(request):
                 '--random_seed', '2021',
                 '--is_training', '4',
                 '--root_path', './model/dataset/',
-                '--data_path', 't1.csv',
+                '--data_path', 'data.csv',
                 '--model_id', '336_24',
                 '--model', 'PatchTST',
                 '--data', 'custom',

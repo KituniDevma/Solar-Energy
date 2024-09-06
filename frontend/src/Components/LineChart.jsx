@@ -56,7 +56,7 @@ const SolarChart = () => {
   return (
     <div className='solar-chart-container'>
         <div>
-        <h2>Solar Energy OT Data</h2>
+        <h2>Solar Energy Generation</h2>
         {/* <div>
             <label>Enter duration (days): </label>
             <input

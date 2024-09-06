@@ -15,7 +15,8 @@ def json_to_csv(json_data):
         df['datetimeEpoch'] = df['datetimeEpoch'].dt.strftime('%Y-%m-%d %H:%M')
 
         selected = df[['datetimeEpoch', 'temp', 'dew', 'humidity', 'winddir', 'windspeed', 'pressure', 'cloudcover', 'solarradiation']]
-        selected.to_csv('./model/dataset/data.csv', index=False)
+        selected.rename(columns={'datetimeEpoch': 'date'}, inplace=True)
+        selected.to_csv('./model/dataset/datas.csv', index=False)
         return 1
     except Exception as e:
         return e
