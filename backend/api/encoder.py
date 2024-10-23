@@ -16,7 +16,19 @@ def json_to_csv(json_data):
 
         selected = df[['datetimeEpoch', 'temp', 'dew', 'humidity', 'winddir', 'windspeed', 'pressure', 'cloudcover', 'solarradiation']]
         selected.rename(columns={'datetimeEpoch': 'date'}, inplace=True)
-        selected.to_csv('./model/dataset/datas.csv', index=False)
+        selected.to_csv('./model/dataset/data.csv', index=False)
         return 1
     except Exception as e:
         return e
+    
+# Function to encode DataFrame into JSON
+def encoder():
+    df = pd.read_csv('./model/results/real_prediction.csv')
+    json_data = df.to_json(orient='split')  # Encode DataFrame into JSON
+    return json_data
+
+# Function to decode JSON back into DataFrame
+def decoder(json_data):
+    df = pd.read_json(json_data, orient='split')  # Decode JSON back into DataFrame
+    df.to_csv('./model/results/real_prediction.csv', index=False)
+    return 0

@@ -86,7 +86,7 @@ function Weather({ selectedLocation, locations, setSelectedLocation, setLocation
                 <div className='row1'>
                     <div className='c1'>
                         <p className='locationText'>{data.name}</p>
-                        <p className='subText'>Solar energy generation</p>
+                        <p className='subText'>Solar radiation</p>
                         <p className='subText'>{new Date().toISOString().split('T')[0]}</p>
                     </div>
                     <div className='c2'>

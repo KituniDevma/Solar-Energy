@@ -29,9 +29,9 @@ function DashboardPage() {
     }
   }
 
-  const predict = async () => {
+  const predict = async (location) => {
     try {
-        const url = `http://127.0.0.1:8000/api/model/`
+        const url = `http://127.0.0.1:8000/api/model/?location=${location}`
         const response = await fetch(url)
         if (!response.ok) {
             const err = response.error
