@@ -12,13 +12,32 @@ function DashboardPage() {
   const [selectedLocation, setSelectedLocation] = useState("Colombo");
   const [locations, setLocations] = useState(["Colombo", "Gampaha", "Galle", "Kandy", "Jaffna"]);
   const [loading, setLoading] = useState(true);
+  const [locationsLoading, setLocationsLoading] = useState(true)
+  const [mean, setMean] = useState(0.0)
+  const [sum, setSum] = useState(0.0)
+  const [dimensions, setDimensions] = useState([])
+  const [counter, setCounter] = useState(0)
+
+  useEffect(() => {
+    setLocationsLoading(true)
+    getLocation();
+    getDimensions();
+  }, [])
+
+  useEffect(() => {
+    if (counter > 0) {
+      setLoading(true)
+      getDimensions()
+      predict(selectedLocation)
+    }
+  }, [counter])
 
   const fetchData = async (location) => {
     try {
-        const url = `http://127.0.0.1:8000/api/weather/?location=${location}`
-        const response = await fetch(url)
-        if (response.ok) {
-            predict()
+        const url = `/api/weather/?location=${location}`
+        const response = await api.get(url)
+        if (response.status === 200) {
+            predict(location)
         }
         else {
             const err = response.error
@@ -31,13 +50,15 @@ function DashboardPage() {
 
   const predict = async (location) => {
     try {
-        const url = `http://127.0.0.1:8000/api/model/?location=${location}`
-        const response = await fetch(url)
-        if (!response.ok) {
+        const url = `/api/model/?location=${location}`
+        const response = await api.get(url)
+        if (response.status =! 200) {
             const err = response.error
             console.error('Error predicting:', err )
         }
         else {
+            setMean(response.data.output[0])
+            setSum(response.data.output[1])
             setLoading(false)
         }
     } catch (error) {
@@ -46,44 +67,40 @@ function DashboardPage() {
   }
 
   useEffect(() => {
-    setLoading(true)
-    console.log(selectedLocation)
-    fetchData(selectedLocation)
-}, [selectedLocation]);
+    if (!locationsLoading && selectedLocation) {
+      setLoading(true)
+      console.log(selectedLocation)
+      fetchData(selectedLocation)
+    }
+}, [selectedLocation, locationsLoading]);
   
-  // const getLocation = () => {
-  //   api
-  //     .get("/api/location/")
-  //     .then((res) => {
-  //       setLocation(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => alert(err));
-  // }
+  const getLocation = () => {
+    api
+      .get("/api/location/")
+      .then((res) => {
+        setLocations(res.data.locations);
+        setSelectedLocation(res.data.locations[0]);
+        setLocationsLoading(false);
+      })
+      .catch((err) => alert(err));
+  }
 
-  // const deleteLocation = (id) => {
-  //   api
-  //     .delete(`/api/location/delete/${id}/`)
-  //     .then((res) => {
-  //       if (res.status === 204) alert('Location deleted successfully!');
-  //       else alert('Failed to delete location');
-  //       getLocation();
-  //     })
-  //     .catch((err) => alert(err));
-  // }
+  const getDimensions = () => {
+    api
+      .get("/api/dimensions/")
+      .then((res) => {
+        setDimensions(res.data.dimensions);
+      })
+      .catch((err) => alert(err));
+  }
 
-  // const addLocation = (e) => {
-  //   e.preventDefault()
-  //   api
-  //     .post("/api/location/", { name })
-  //     .then((res) => {
-  //       if (res.status === 201) alert('Location added successfully!');
-  //       else alert('Failed to add location');
-  //       getLocation();
-  //       setName('');
-  //     })
-  //     .catch((err) => alert(err));
-  // }
+  const dimensionUpdate = async (dimensions) => {
+    const response = await api.post("/api/dimensions/", {'dimensions': dimensions})
+    if (response.status === 200) {
+      console.log('Dimensions updated successfully')
+      setCounter(counter + 1)
+    }
+  }
 
   if (loading) {
     return (
@@ -101,8 +118,8 @@ function DashboardPage() {
         <Header />
         <div style={styles.content}>
           <div style={styles.col1}>
-            <Weather selectedLocation={selectedLocation} locations={locations} setSelectedLocation={setSelectedLocation} setLocations={setLocations}/>
-            <EnergyCal />
+            <Weather selectedLocation={selectedLocation} locations={locations} setSelectedLocation={setSelectedLocation} setLocations={setLocations} mean={mean.toFixed(0)}/>
+            <EnergyCal sum={(sum/1000).toFixed(3)} dimensions={dimensions} dimensionsUpdate={dimensionUpdate}/>
           </div>
           <div style={styles.col2}>
             <SolarChart />
@@ -111,23 +128,6 @@ function DashboardPage() {
       </div>
     );
   }
-
-  // return (
-  //   <div style={styles.container}>
-  //     <Header />
-  //     <SolarChart />
-  //     <Weather />      
-  //     <div style={styles.content}>
-  //       <div style={styles.col1}>
-         
-  //         <EnergyCal />
-  //       </div>
-  //       {/* <div style={styles.col2}>
-  //         <SolarChart />
-  //       </div> */}
-  //     </div>
-  //   </div>
-  // );
 }
 
 export default DashboardPage;

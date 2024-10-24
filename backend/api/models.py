@@ -8,6 +8,8 @@ import json
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     locations = models.JSONField(default=list, null=True, blank=True)
+    width = models.FloatField(default=1.0)
+    length = models.FloatField(default=2.0)
 
     def __str__(self):
         return self.user.username

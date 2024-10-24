@@ -4,7 +4,7 @@ import Condition from './condition';
 import axios from 'axios';
 import SunIcon from './Assets/sun-svgrepo-com.svg';
 
-function Weather({ selectedLocation, locations, setSelectedLocation, setLocations }) {
+function Weather({ selectedLocation, locations, setSelectedLocation, setLocations, mean }) {
     const [data, setData] = useState({});
     const [location, setLocation] = useState('');
 
@@ -12,7 +12,6 @@ function Weather({ selectedLocation, locations, setSelectedLocation, setLocation
     const fetchWeatherData = (location) => {
         const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=52b5937a089af02356f7af883d9ec6bf&units=metric`;
         axios.get(weatherURL).then((response) => {
-            console.log(response.data);
             setData(response.data);
         });
     };
@@ -94,7 +93,7 @@ function Weather({ selectedLocation, locations, setSelectedLocation, setLocation
                             <img src={SunIcon} alt="sun icon" className='icon' />
                         </div>
                         <div className='solar'>
-                            {data.main ? <h1 className='solarText'>85 W/m²</h1> : null}
+                            {data.main ? <h1 className='solarText'>{mean} W/m²</h1> : null}
                         </div>
                     </div>
                 </div>

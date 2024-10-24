@@ -3,7 +3,8 @@ import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto'; // Importing Chart.js
 import Papa from 'papaparse';
 import 'chartjs-adapter-date-fns'; // Importing date adapter
-import './LineChart.css'
+import './LineChart.css';
+import api from '../api';
 
 const SolarChart = () => {
   const [chartData, setChartData] = useState(null);
@@ -13,24 +14,34 @@ const SolarChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/data/');
-        const reader = response.body.getReader();
-        const result = await reader.read(); // Raw array
-        const decoder = new TextDecoder('utf-8');
-        const csv = decoder.decode(result.value); // CSV text
+        const response = await api.get('/api/data/');
+        const csv = response.data; // CSV text
         const results = Papa.parse(csv, { header: true });
 
         const parsedData = results.data.map(row => ({
           x: new Date(row.date),
-          y: parseFloat(row.OT)
+          y: parseFloat(row.SE),
+        }));
+
+        const anotherParsedData = results.data.map(row => ({
+          x: new Date(row.date),
+          y: parseFloat(row.OT), // Assuming 'OT' is another value you want to plot
         }));
 
         setChartData({
           datasets: [
             {
-              label: 'Solar Radiation',
+              label: 'Solar Energy (Wh)',
               data: parsedData,
-              borderColor: 'balck',
+              borderColor: 'black',
+              backgroundColor: 'rgba(0, 0, 0, 0.1)', // Optional: if you want to show some fill color
+              fill: false,
+            },
+            {
+              label: 'Solar Radiation (W/m²)',
+              data: anotherParsedData, // New data for the second line
+              borderColor: 'red',
+              backgroundColor: 'rgba(255, 0, 0, 0.1)',
               fill: false,
             },
           ],
@@ -54,46 +65,79 @@ const SolarChart = () => {
   }
 
   return (
-    <div className='solar-chart-container'>
-        <div>
+    <div className="solar-chart-container">
+      <div>
         <h2>Solar Radiation</h2>
-        {/* <div>
-            <label>Enter duration (days): </label>
-            <input
-            type="number"
-            value={duration}
-            onChange={(e) => setDuration(e.target.value)}
-            />
-        </div> */}
-        <div className='solar-chart'>
-            <Line
-                ref={chartRef}
-                data={chartData}
-                options={{
-                scales: {
-                    x: {
-                    type: 'time',
-                    time: {
-                        unit: 'hour',
+        <div className="solar-chart">
+          <Line
+            ref={chartRef}
+            data={chartData}
+            options={{
+              scales: {
+                x: {
+                  type: 'time',
+                  time: {
+                    unit: 'hour',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Date/Time',
+                    font: {
+                      size: 15, // Change font size
+                      family: 'raleway', // Change font family
+                      weight: 'bold', // Font weight
                     },
-                    title: {
-                        display: true,
-                        text: 'Date/Time',
+                    color: 'black',
+                  },
+                  ticks: {
+                    font: {
+                      family: 'Raleway',
+                      weight: 'normal',
+                      size: 11, // Tick font size
                     },
-                    },
-                    y: {
-                    title: {
-                        display: true,
-                        text: 'OT (Output Temperature)',
-                    },
-                    },
+                    color: 'black',
+                  }
                 },
-                }}
-            />
+                y: {
+                  title: {
+                    display: true,
+                    text: 'Solar Radiation (W/m²) / Solar Energy (Wh)',
+                    font: {
+                      size: 15,
+                      family: 'Raleway',
+                      weight: 'bold',
+                      colour: 'black',
+                    },
+                    color: 'black',
+                  },
+                  ticks: {
+                    font: {
+                      family: 'Raleway',
+                      weight: 'normal',
+                      size: 11, // Tick font size
+                    },
+                    color: 'black',
+                  }
+                },
+              },
+              plugins: {
+                legend: {
+                  labels: {
+                    font: {
+                      family: 'Raleway',
+                      weight: 'bold',
+                      size: 14, // Legend font size
+                    },
+                    color: 'black',
+                  },
+                },
+              },
+            }}
+          />
         </div>
-        </div>
+      </div>
     </div>
   );
 };
 
-export default SolarChart;
+export default SolarChart;
