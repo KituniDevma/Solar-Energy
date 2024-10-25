@@ -1,47 +1,62 @@
 .area-calculator {
-    border-radius: 15px;
-    padding: 10px;
-     width: 22%;
-    margin: 20px ;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .input-group {
-    margin-bottom: 15px;
-  }
-  
-  .input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .input-group input {
-    width: 90%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-   
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color:#f8ff20;
-    color: black;
-  }
-  
-  button:hover {
-    background-color:  #e4c02d;
-    color: white;
-  }
-  
-  .result {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
+  border-radius: 15px;
+  padding: 10px;
+  width: 100%;
+  margin: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.form-column {
+  width: 56%; /* Adjusts form column width */
+}
+
+.output-column {
+  width: 40%; /* Adjusts output column width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 90%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  width: 97%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #f8ff20;
+  color: black;
+}
+
+button:hover {
+  background-color: #e4c02d;
+  color: white;
+}
+
+.result {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 18px;
+}
