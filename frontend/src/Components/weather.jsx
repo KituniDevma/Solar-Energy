@@ -3,6 +3,7 @@ import './weather.css';
 import Condition from './condition';
 import axios from 'axios';
 import SunIcon from './Assets/sun-svgrepo-com.svg';
+import api from '../api'
 
 function Weather({ selectedLocation, locations, setSelectedLocation, setLocations, mean }) {
     const [data, setData] = useState({});
@@ -16,6 +17,19 @@ function Weather({ selectedLocation, locations, setSelectedLocation, setLocation
         });
     };
 
+    const updateLocation = async (location) => {
+        try {
+            const response = await api.post('/api/location/', { 'location': location });
+            setSelectedLocation(location)
+        } catch (error) {
+            console.error('Error updating location:', error);
+        }
+    };
+
+    const onRemoveLocation = (locToRemove) => {
+        setLocations(locations.filter(loc => loc !== locToRemove));
+    };
+
     // Fetch data for the default location when the component mounts
     useEffect(() => {
         fetchWeatherData(selectedLocation);
@@ -24,14 +38,13 @@ function Weather({ selectedLocation, locations, setSelectedLocation, setLocation
     const searchLocation = (event) => {
         if (event.key === 'Enter' && location) {
             fetchWeatherData(location);
-
+            
             // Update locations array by adding the searched location at the beginning and removing the last element
             setLocations((prevLocations) => {
                 const updatedLocations = [location, ...prevLocations.filter((loc) => loc.toLowerCase() !== location.toLowerCase())];
-                return updatedLocations.slice(0, 5); // Keep only the first 5 locations
+                return updatedLocations.slice(0, 4); // Keep only the first 5 locations
             });
-
-            setSelectedLocation(location); // Set the newly searched location as selected
+            updateLocation(location)
             setLocation(''); // Clear the input field
         }
     };
@@ -69,12 +82,24 @@ function Weather({ selectedLocation, locations, setSelectedLocation, setLocation
                                 boxShadow: selectedLocation === loc ? '0 2px 4px rgba(0, 0, 0, 0.2)' : 'none',
                             }}
                         >
+                            <span style={styles.locationText}>
                             {loc === "Colombo" && (
                                 <span role="img" aria-label="home" style={styles.icon}>
                                     🏠
                                 </span>
                             )}
-                            {loc}
+                            
+                                {loc}
+                            </span>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onRemoveLocation(loc);
+                                }}
+                                style={styles.closeButton}
+                                >
+                                    ✖️
+                            </button>
                         </button>
                     ))}
                 </div>
@@ -176,26 +201,56 @@ const styles = {
     },
     locationButtons: {
         display: 'flex',
-        justifyContent: 'space-between',
         marginTop: '10px',
         marginBottom: '10px',
+        flexWrap: 'wrap',
         width: '100%',
     },
     locationButton: {
+        // display: 'flex',
         padding: '6px 3px',
         margin: '2px',
         fontSize: '13px',
         borderRadius: '20px',
         height: '40px',
-        width: '20%',
+        width: '24%',
         border: 'none',
         cursor: 'pointer',
         transition: 'all 0.3s ease',
         boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)',
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
         color: 'black',
+        position: 'relative',
+        allignItems: 'center',
+        lineHeight: '1',
+        justifyContent: 'center',
+    },
+    locationText: {
+        whiteSpace: 'nowrap', // Prevents text wrapping
+        overflow: 'hidden', // Hides overflowed text
+        textOverflow: 'ellipsis', // Adds "..." for truncated text
+        maxWidth: '30%', // Set maximum width for text container
+        lineHeight: '1',
+        // display: 'block', // Space between text and close button
+        marginRight: '5px',
     },
     icon: {
-        marginRight: '8px',
+        marginRight: '5px',
+        width: '5px', // fixed width
+        height: '5px',
     },
+    closeButton: {
+        fontSize: '12px', // small font size
+        backgroundColor: 'transparent', // no background color
+        border: 'none', // no border
+        cursor: 'pointer',
+        padding: '2px', // small padding to reduce size
+        // marginLeft: '2px', // small margin to separate from text
+        width: '5px', // fixed width
+        height: '5px', // fixed height
+        lineHeight: '1', // makes sure button content is vertically centered
+        // display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
 };
