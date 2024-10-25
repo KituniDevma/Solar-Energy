@@ -329,9 +329,6 @@ class Exp_Main(Exp_Basic):
                         new_state_dict[k] = v
                 self.model.load_state_dict(new_state_dict)
 
-        # Load the updated state_dict into the model
-        self.model.load_state_dict(new_state_dict)
-
         preds = []
 
         self.model.eval()
