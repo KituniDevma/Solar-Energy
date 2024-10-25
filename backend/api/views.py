@@ -110,7 +110,7 @@ class WeatherView(views.APIView):
             json_to_csv(location_weather.weather_data)
             return JsonResponse({'status': 'Successful'}, status=200)
         except LocationWeather.DoesNotExist:
-            APIKEY = 'EZYXGGE7U3PKQ4Q2JULD9JJP9' #os.getenv(APIKEY)
+            APIKEY = 'P6FAKNRNT7GZCS3VH6VLRQ6WE' #os.getenv(APIKEY)
             api_url = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}/{date1.strftime("%Y-%m-%d")}/{date2.strftime("%Y-%m-%d")}?unitGroup=metric&include=hours&key={APIKEY}&contentType=json'
 
             try:
@@ -163,25 +163,26 @@ class ModelView(views.APIView):
                         '--is_training', '4',
                         '--root_path', './model/dataset/',
                         '--data_path', 'data.csv',
-                        '--model_id', '336_24',
+                        '--model_id', '336_48',
                         '--model', 'PatchTST',
                         '--data', 'custom',
                         '--features', 'MS',
                         '--seq_len', '336',
-                        '--pred_len', '24',
-                        '--label_len', '24',
-                        '--enc_in', '21',
-                        '--e_layers', '3',
-                        '--n_heads', '16',
-                        '--d_model', '128',
-                        '--d_ff', '256',
-                        '--dropout', '0.2',
-                        '--fc_dropout', '0.2',
-                        '--head_dropout', '0',
-                        '--patch_len', '16',
-                        '--stride', '8',
-                        '--train_epochs', '50',
-                        '--patience', '10',
+                        '--pred_len', '48',
+                        '--label_len', '48',
+                        # '--enc_in', '21',
+                        # '--e_layers', '3',
+                        # '--n_heads', '16',
+                        # '--d_model', '128',
+                        # '--d_ff', '256',
+                        # '--dropout', '0.2',
+                        # '--fc_dropout', '0.2',
+                        # '--head_dropout', '0',
+                        # '--patch_len', '16',
+                        # '--stride', '8',
+                        '--des', 'test',
+                        '--train_epochs', '100',
+                        '--patience', '20',
                         '--itr', '1',
                         '--batch_size', '128',
                         '--learning_rate', '0.0001'
@@ -194,7 +195,8 @@ class ModelView(views.APIView):
                     forecast_data, mean, sum = encoder(width, length)
                     LocationForecasts.objects.create(location=location, forecast_data=forecast_data)
                     return JsonResponse({'status': 'success', 'message': 'Model training completed successfully', 'output': [mean, sum]}, status=200)
-                else:            
+                else: 
+                    print(result.stderr)           
                     return JsonResponse({'status': 'error', 'message': 'Model training failed', 'error': result.stderr}, status=500)
             except Exception as e:
                 return JsonResponse({'status': 'error', 'message': str(e)}, status=500)

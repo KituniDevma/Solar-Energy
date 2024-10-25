@@ -67,7 +67,7 @@ const SolarChart = () => {
   return (
     <div className="solar-chart-container">
       <div>
-        <h2>Solar Radiation</h2>
+        <h2>Solar Forecast</h2>
         <div className="solar-chart">
           <Line
             ref={chartRef}

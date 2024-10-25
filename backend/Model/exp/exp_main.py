@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
+from collections import OrderedDict
 
 warnings.filterwarnings('ignore')
 
@@ -314,7 +315,22 @@ class Exp_Main(Exp_Basic):
         if load:
             path = os.path.join(self.args.checkpoints, setting)
             best_model_path = path + '/' + 'checkpoint.pth'
-            self.model.load_state_dict(torch.load(best_model_path))
+            if torch.cuda.is_available():
+                self.model.load_state_dict(torch.load(best_model_path))
+            else:
+                state_dict = torch.load(best_model_path, map_location=torch.device('cpu'))
+
+                # If the state_dict was saved with DataParallel, remove the 'module.' prefix
+                new_state_dict = OrderedDict()
+                for k, v in state_dict.items():
+                    if k.startswith('module.'):
+                        new_state_dict[k[7:]] = v  # Remove the 'module.' prefix
+                    else:
+                        new_state_dict[k] = v
+                self.model.load_state_dict(new_state_dict)
+
+        # Load the updated state_dict into the model
+        self.model.load_state_dict(new_state_dict)
 
         preds = []
 
@@ -367,7 +383,7 @@ class Exp_Main(Exp_Basic):
         current_date = datetime.now().date()
 
         # Create a list of 24 hourly time slots for the current date
-        time_slots = [datetime.combine(current_date, datetime.min.time()) + timedelta(hours=i) for i in range(24)]
+        time_slots = [datetime.combine(current_date, datetime.min.time()) + timedelta(hours=i) for i in range(48)]
 
         # Add a new column 'datetime' to the DataFrame
         p['date'] = time_slots
