@@ -39,9 +39,14 @@ class LocationListCreate(generics.ListCreateAPIView):
         # Add the new location to the locations array
         new_location = request.data.get('location')
         if new_location:
-            profile.locations.append(new_location)
-            profile.save()
-            return JsonResponse({'message': 'Location added successfully', 'locations': profile.locations})
+            if new_location not in profile.locations:
+                profile.locations.append(new_location)
+                profile.save()
+                return JsonResponse({'message': 'Location added successfully', 'locations': profile.locations})
+            else:
+                return JsonResponse({'error': 'Location already exists'}, status=400)
+        else:
+            return JsonResponse({'error': 'Location not provided'}, status=400)
 
 class DimesionsListCreate(generics.ListCreateAPIView):
     serializer_class = UserSerializer
