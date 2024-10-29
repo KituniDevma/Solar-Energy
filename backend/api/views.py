@@ -115,20 +115,38 @@ class WeatherView(views.APIView):
             json_to_csv(location_weather.weather_data)
             return JsonResponse({'status': 'Successful'}, status=200)
         except LocationWeather.DoesNotExist:
-            APIKEY = 'P6FAKNRNT7GZCS3VH6VLRQ6WE' #os.getenv(APIKEY)
-            api_url = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}/{date1.strftime("%Y-%m-%d")}/{date2.strftime("%Y-%m-%d")}?unitGroup=metric&include=hours&key={APIKEY}&contentType=json'
 
-            try:
-                response = requests.get(api_url)
-                response.raise_for_status()
-                weather_data = response.json()
+            api_keys = [
+                os.getenv('APIKEY1'), 
+                os.getenv('APIKEY2'), 
+                os.getenv('APIKEY3'), 
+                os.getenv('APIKEY4')
+            ]
 
-                LocationWeather.objects.create(location=location, weather_data=weather_data)
+            for APIKEY in api_keys:
+                api_url = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}/{date1.strftime("%Y-%m-%d")}/{date2.strftime("%Y-%m-%d")}?unitGroup=metric&include=hours&key={APIKEY}&contentType=json'
+
+                try:
+                    # print('sending.......')
+                    response = requests.get(api_url)
+                    # print(response.status_code)
+                    # response.raise_for_status()
+
+                    if response.status_code == 429:
+                        print(f"Invalid or expired token with API key: {APIKEY}")
+
+                    weather_data = response.json()
+
+                    LocationWeather.objects.create(location=location, weather_data=weather_data)
+                    
+                    json_to_csv(weather_data)
+                    return JsonResponse({'status': 'Successful'}, status=200)
                 
-                json_to_csv(weather_data)
-                return JsonResponse({'status': 'Successful', 'data': weather_data}, status=200)
-            except requests.exceptions.RequestException as e:
-                return JsonResponse({'status': 'Failed', 'error': str(e)}, status=500)
+                except requests.exceptions.RequestException as e:
+                    print(f"Request failed with API key {APIKEY}: {e}")
+                    continue
+            
+            return JsonResponse({'status': 'Failed', 'error': 'All API keys failed'}, status=502)
 
 class DataView(views.APIView):
     serializer_class = UserSerializer
