@@ -1,10 +1,9 @@
 import axios from "axios"
 import {ACCESS_TOKEN} from "./constants"
 
-const apiurl = "/choreo-apis/solarvision/backend/v1";
 
 const api = axios.create({
-    baseURL: import.meta.env.API_URL ? import.meta.env.API_URL : apiurl,
+    baseURL: `http://127.0.0.1:8000` ? `http://127.0.0.1:8000`: `/choreo-apis/backend-807648536:8000`,
 })
 
 api.interceptors.request.use(
