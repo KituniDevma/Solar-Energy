@@ -15,23 +15,29 @@ class Profile(models.Model):
         return self.user.username
 
 class LocationWeather(models.Model):
-    location = models.CharField(max_length=100, primary_key=True)
+    location = models.CharField(max_length=100)
     weather_data = models.JSONField()
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True, primary_key=True)
+
+    class Meta:
+        unique_together = ('location', 'date_created')
 
     def __str__(self):
-        return self.location
-    
+        return f"{self.location} - {self.date_created}"
+
     def weather_as_json(self):
         return json.dumps(self.weather_data)
-    
+
 class LocationForecasts(models.Model):
-    location = models.CharField(max_length=100, primary_key=True)
+    location = models.CharField(max_length=100)
     forecast_data = models.JSONField()
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True, primary_key=True)
+
+    class Meta:
+        unique_together = ('location', 'date_created')
 
     def __str__(self):
-        return self.location
+        return f"{self.location} - {self.date_created}"
 
     def forecast_as_json(self):
         return json.dumps(self.forecast_data)
