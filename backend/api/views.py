@@ -13,7 +13,6 @@ import os
 
 load_dotenv()
 
-# Create your views here.
 class LocationListCreate(generics.ListCreateAPIView):
     serializer_class = UserSerializer
     Permission_classes = [IsAuthenticated]
